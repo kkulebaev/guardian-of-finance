@@ -2,9 +2,12 @@ import type { Dayjs } from 'dayjs'
 import React, { useState } from 'react'
 import { Button, DatePicker, Form, InputNumber, Select } from 'antd'
 import { CATEGORIES, USERS } from '../helpers'
-import { Categories } from '../types'
+import { Categories, IOperation } from '../types'
 
-function AddOperationForm() {
+interface AddOperationFormProps {
+  createOperation: (operation: IOperation) => void
+}
+function AddOperationForm({ createOperation }: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
   const [userId, setUserId] = useState<number | null>(null)
   const [category, setCategory] = useState<Categories>(Categories.rent)
@@ -15,8 +18,12 @@ function AddOperationForm() {
     setSum(value)
   }
 
+  const formSubmitHandler = (operation: IOperation) => {
+    createOperation(operation)
+  }
+
   return (
-    <Form className="max-w-5xl" layout="vertical">
+    <Form className="max-w-5xl" layout="vertical" onFinish={formSubmitHandler}>
       <Form.Item label="Месяц" name="month" colon={false}>
         <DatePicker
           picker="month"
@@ -26,7 +33,7 @@ function AddOperationForm() {
           onChange={setMonth}
         />
       </Form.Item>
-      <Form.Item label="Имя" name="username" colon={false}>
+      <Form.Item label="Имя" name="userId" colon={false}>
         <Select
           value={userId}
           options={USERS.map(x => ({ value: x.id, label: x.name }))}
@@ -48,7 +55,7 @@ function AddOperationForm() {
           onChange={sumHandler}
         />
       </Form.Item>
-      <Button>Добавить</Button>
+      <Button htmlType="submit">Добавить</Button>
     </Form>
   )
 }
