@@ -4,6 +4,13 @@ import { Button, DatePicker, Form, InputNumber, Select } from 'antd'
 import { CATEGORIES, USERS } from '../helpers'
 import { Categories, IOperation } from '../types'
 
+interface FormFields {
+  month: Dayjs
+  userId: number
+  category: Categories
+  sum: number
+}
+
 interface AddOperationFormProps {
   createOperation: (operation: IOperation) => void
 }
@@ -18,13 +25,13 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
     setSum(value)
   }
 
-  const formSubmitHandler = (operation: IOperation) => {
-    createOperation(operation)
+  const formSubmitHandler = (operation: FormFields) => {
+    createOperation({ ...operation, month: operation.month.toISOString() })
   }
 
   return (
-    <Form className="max-w-5xl" layout="vertical" onFinish={formSubmitHandler}>
-      <Form.Item label="Месяц" name="month" colon={false}>
+    <Form className="flex gap-4 w-full" onFinish={formSubmitHandler}>
+      <Form.Item className="w-full" label="Месяц" name="month" colon={false}>
         <DatePicker
           picker="month"
           format="MMMM YYYY"
@@ -33,21 +40,26 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
           onChange={setMonth}
         />
       </Form.Item>
-      <Form.Item label="Имя" name="userId" colon={false}>
+      <Form.Item className="w-full" label="Имя" name="userId" colon={false}>
         <Select
           value={userId}
           options={USERS.map(x => ({ value: x.id, label: x.name }))}
           onChange={setUserId}
         />
       </Form.Item>
-      <Form.Item label="Категория" name="category" colon={false}>
+      <Form.Item
+        className="w-full"
+        label="Категория"
+        name="category"
+        colon={false}
+      >
         <Select
           value={category}
           options={CATEGORIES.map(x => ({ value: x.id, label: x.label }))}
           onChange={setCategory}
         />
       </Form.Item>
-      <Form.Item label="Сумма" name="sum" colon={false}>
+      <Form.Item className="flex w-full" label="Сумма" name="sum" colon={false}>
         <InputNumber
           className="w-full"
           value={sum}
@@ -55,7 +67,9 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
           onChange={sumHandler}
         />
       </Form.Item>
-      <Button htmlType="submit">Добавить</Button>
+      <Button className="ml-auto" htmlType="submit">
+        Добавить
+      </Button>
     </Form>
   )
 }
