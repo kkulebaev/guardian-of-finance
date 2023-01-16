@@ -1,13 +1,20 @@
 import type { Dayjs } from 'dayjs'
 import React, { useState } from 'react'
-import { Button, DatePicker, Form, InputNumber, Select } from 'antd'
+import {
+  Button,
+  type CheckboxOptionType,
+  DatePicker,
+  Form,
+  InputNumber,
+  Select,
+} from 'antd'
 import { CATEGORIES, USERS } from '../helpers'
-import { Categories, IOperation } from '../types'
+import { Categories, ICategory, IOperation, IUser } from '../types'
 
 interface FormFields {
   month: Dayjs
-  userId: number
-  category: Categories
+  user: CheckboxOptionType
+  category: CheckboxOptionType
   sum: number
 }
 
@@ -17,7 +24,7 @@ interface AddOperationFormProps {
 
 function AddOperationForm({ createOperation }: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
-  const [userId, setUserId] = useState<number | null>(null)
+  const [user, setUser] = useState<number | null>(null)
   const [category, setCategory] = useState<Categories>(Categories.rent)
   const [sum, setSum] = useState(0)
 
@@ -27,7 +34,22 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
   }
 
   const formSubmitHandler = (operation: FormFields) => {
-    createOperation({ ...operation, month: operation.month.toISOString() })
+    const selectedUser = {
+      id: operation.user.value,
+      name: operation.user.label,
+    } as IUser
+
+    const selectedCat = {
+      id: operation.category.value,
+      label: operation.category.label,
+    } as ICategory
+
+    createOperation({
+      user: selectedUser,
+      month: operation.month.toISOString(),
+      category: selectedCat,
+      sum: operation.sum,
+    })
   }
 
   return (
@@ -42,12 +64,13 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
           onChange={setMonth}
         />
       </Form.Item>
-      <Form.Item className="w-full" label="Имя" name="userId" colon={false}>
+      <Form.Item className="w-full" label="Имя" name="user" colon={false}>
         <Select
           className="w-full"
-          value={userId}
+          value={user}
           options={USERS.map(x => ({ value: x.id, label: x.name }))}
-          onChange={setUserId}
+          labelInValue
+          onChange={setUser}
         />
       </Form.Item>
       <Form.Item
@@ -60,6 +83,7 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
           className="w-full"
           value={category}
           options={CATEGORIES.map(x => ({ value: x.id, label: x.label }))}
+          labelInValue
           onChange={setCategory}
         />
       </Form.Item>
