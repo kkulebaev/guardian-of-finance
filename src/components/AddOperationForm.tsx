@@ -14,6 +14,7 @@ interface FormFields {
 interface AddOperationFormProps {
   createOperation: (operation: IOperation) => void
 }
+
 function AddOperationForm({ createOperation }: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
   const [userId, setUserId] = useState<number | null>(null)
@@ -33,6 +34,7 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
     <Form className="flex gap-4 w-full" onFinish={formSubmitHandler}>
       <Form.Item className="w-full" label="Месяц" name="month" colon={false}>
         <DatePicker
+          className="w-full"
           picker="month"
           format="MMMM YYYY"
           value={month}
@@ -42,6 +44,7 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
       </Form.Item>
       <Form.Item className="w-full" label="Имя" name="userId" colon={false}>
         <Select
+          className="w-full"
           value={userId}
           options={USERS.map(x => ({ value: x.id, label: x.name }))}
           onChange={setUserId}
@@ -54,12 +57,13 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
         colon={false}
       >
         <Select
+          className="w-full"
           value={category}
           options={CATEGORIES.map(x => ({ value: x.id, label: x.label }))}
           onChange={setCategory}
         />
       </Form.Item>
-      <Form.Item className="flex w-full" label="Сумма" name="sum" colon={false}>
+      <Form.Item className="w-full" label="Сумма" name="sum" colon={false}>
         <InputNumber
           className="w-full"
           value={sum}
