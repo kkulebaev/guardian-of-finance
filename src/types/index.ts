@@ -26,8 +26,8 @@ export interface IUser {
 }
 
 export interface IOperation {
-  userId: number
+  user: IUser
   month: string
-  category: Categories
+  category: ICategory
   sum: number
 }
