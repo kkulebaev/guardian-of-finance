@@ -19,7 +19,7 @@ interface FormFields {
 }
 
 interface AddOperationFormProps {
-  createOperation: (operation: IOperation) => void
+  createOperation: (operation: Omit<IOperation, 'id'>) => void
   loading?: boolean
 }
 

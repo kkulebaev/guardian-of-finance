@@ -26,6 +26,7 @@ export interface IUser {
 }
 
 export interface IOperation {
+  id: string
   user: IUser
   month: string
   category: ICategory

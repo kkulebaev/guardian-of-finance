@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { notification } from 'antd'
+import { Button, notification } from 'antd'
+import { ColumnsType } from 'antd/es/table'
 
 import AddOperationForm from '../components/AddOperationForm'
 import { IOperation } from '../types'
@@ -25,7 +26,9 @@ function Costs() {
     }
   }
 
-  async function createOperations(operation: IOperation): Promise<void> {
+  async function createOperations(
+    operation: Omit<IOperation, 'id'>
+  ): Promise<void> {
     setLoadingCreate(true)
     try {
       const { data } = await apiClient.costs.addOperation(operation)
@@ -38,6 +41,46 @@ function Costs() {
     }
   }
 
+  async function deleteOperation(id: string) {
+    try {
+      await apiClient.costs.deleteOperation(id)
+      notification.success({ message: 'Операция успешно удалена' })
+      setOperations(operations.filter(x => x.id !== id))
+    } catch (error) {
+      notification.error({ message: 'Ошибка при удалении операции' })
+    }
+  }
+
+  const OPERATION_COLS: ColumnsType<IOperation> = [
+    {
+      title: 'Дата',
+      dataIndex: 'month',
+    },
+    {
+      title: 'Имя',
+      dataIndex: ['user', 'name'],
+    },
+    {
+      title: 'Категория',
+      dataIndex: ['category', 'label'],
+    },
+    {
+      title: 'Сумма',
+      dataIndex: 'sum',
+    },
+    {
+      title: ' ',
+      key: 'action',
+      align: 'right',
+      width: 100,
+      render: (_, record) => (
+        <Button danger onClick={() => deleteOperation(record.id)}>
+          Удалить
+        </Button>
+      ),
+    },
+  ]
+
   useEffect(() => {
     fetchOperations().then(data => setOperations(data))
   }, [])
@@ -48,7 +91,11 @@ function Costs() {
         createOperation={createOperations}
         loading={loadingCreate}
       />
-      <OperationTable dataSource={operations} loading={loadingData} />
+      <OperationTable
+        dataSource={operations}
+        loading={loadingData}
+        columns={OPERATION_COLS}
+      />
     </div>
   )
 }
