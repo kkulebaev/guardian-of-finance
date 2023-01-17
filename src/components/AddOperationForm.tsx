@@ -20,9 +20,10 @@ interface FormFields {
 
 interface AddOperationFormProps {
   createOperation: (operation: IOperation) => void
+  loading?: boolean
 }
 
-function AddOperationForm({ createOperation }: AddOperationFormProps) {
+function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
   const [user, setUser] = useState<number | null>(null)
   const [category, setCategory] = useState<Categories>(Categories.rent)
@@ -95,11 +96,15 @@ function AddOperationForm({ createOperation }: AddOperationFormProps) {
           onChange={sumHandler}
         />
       </Form.Item>
-      <Button className="ml-auto" htmlType="submit">
+      <Button className="ml-auto" htmlType="submit" loading={loading}>
         Добавить
       </Button>
     </Form>
   )
+}
+
+AddOperationForm.defaultProps = {
+  loading: false,
 }
 
 export default AddOperationForm

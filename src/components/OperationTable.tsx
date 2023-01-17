@@ -7,9 +7,10 @@ import { OPERATION_COLS } from '../helpers'
 
 interface OperationTableProps {
   dataSource: IOperation[]
+  loading?: boolean
 }
 
-function OperationTable({ dataSource }: OperationTableProps) {
+function OperationTable({ dataSource, loading }: OperationTableProps) {
   const getUniqRowKey = () => uuidv4()
 
   return (
@@ -18,8 +19,13 @@ function OperationTable({ dataSource }: OperationTableProps) {
       columns={OPERATION_COLS}
       dataSource={dataSource}
       rowKey={getUniqRowKey}
+      loading={loading}
     />
   )
+}
+
+OperationTable.defaultProps = {
+  loading: false,
 }
 
 export default OperationTable
