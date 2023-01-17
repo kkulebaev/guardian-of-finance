@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, notification } from 'antd'
 import { ColumnsType } from 'antd/es/table'
+import * as dayjs from 'dayjs'
 
 import AddOperationForm from '../components/AddOperationForm'
 import { IOperation } from '../types'
@@ -55,18 +56,25 @@ function Costs() {
     {
       title: 'Дата',
       dataIndex: 'month',
+      align: 'center',
+      width: 200,
+      render: value => dayjs(value).format('MMMM'),
     },
     {
       title: 'Имя',
       dataIndex: ['user', 'name'],
+      align: 'center',
     },
     {
       title: 'Категория',
       dataIndex: ['category', 'label'],
+      align: 'center',
     },
     {
       title: 'Сумма',
       dataIndex: 'sum',
+      align: 'center',
+      render: value => value.toLocaleString(),
     },
     {
       title: ' ',
