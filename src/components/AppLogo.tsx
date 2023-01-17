@@ -1,15 +1,15 @@
 import React from 'react'
+import Logo from '../assets/app-logo.webp'
 
-function AppLogo() {
-  return (
-    <div
-      style={{
-        height: 32,
-        margin: 16,
-        background: 'rgba(255, 255, 255, 0.2)',
-      }}
-    />
-  )
+interface AppLogoProps {
+  className?: string
+}
+function AppLogo({ className }: AppLogoProps) {
+  return <img src={Logo} alt="logo" className={className} />
+}
+
+AppLogo.defaultProps = {
+  className: '',
 }
 
 export default AppLogo
