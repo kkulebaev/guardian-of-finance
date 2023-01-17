@@ -3,7 +3,7 @@ import AddOperationForm from '../components/AddOperationForm'
 import { IOperation } from '../types'
 import OperationTable from '../components/OperationTable'
 
-function Main() {
+function Costs() {
   const [operations, setOperations] = useState<IOperation[]>([])
 
   return (
@@ -16,4 +16,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Costs
