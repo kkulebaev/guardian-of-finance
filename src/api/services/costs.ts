@@ -8,7 +8,13 @@ export const costsAPI = (api: AxiosInstance) => ({
     return api.get(costsPrefix)
   },
 
-  async addOperation(payload: IOperation): Promise<AxiosResponse<IOperation>> {
+  async addOperation(
+    payload: Omit<IOperation, 'id'>
+  ): Promise<AxiosResponse<IOperation>> {
     return api.post(costsPrefix, payload)
+  },
+
+  async deleteOperation(id: string): Promise<AxiosResponse<IOperation>> {
+    return api.delete(`${costsPrefix}/${id}`)
   },
 })
