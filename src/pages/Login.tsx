@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form, Input } from 'antd'
+import AppLogo from '../components/AppLogo'
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false)
@@ -28,6 +29,7 @@ function Login() {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
+      <AppLogo className="mb-4" />
       <Form.Item
         label="Логин"
         name="username"
