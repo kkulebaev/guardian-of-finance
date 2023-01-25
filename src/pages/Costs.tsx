@@ -58,7 +58,7 @@ function Costs() {
       dataIndex: 'month',
       align: 'center',
       width: 200,
-      render: value => dayjs(value).format('MMMM'),
+      render: value => (value ? dayjs(value).format('MMMM') : null),
     },
     {
       title: 'Имя',
@@ -74,7 +74,7 @@ function Costs() {
       title: 'Сумма',
       dataIndex: 'sum',
       align: 'center',
-      render: value => value.toLocaleString(),
+      render: value => (value ? value.toLocaleString() : null),
     },
     {
       title: ' ',
