@@ -6,14 +6,15 @@ import * as dayjs from 'dayjs'
 import AddOperationForm from '../components/AddOperationForm'
 import OperationTable from '../components/OperationTable'
 import { apiClient } from '../api'
-import { IOperation } from '../api/types/custom.types'
+import { IOperation, IOperationDB } from '../api/types/custom.types'
+import { addOperation } from '../api/services2/add-operation'
 
 function Costs() {
-  const [operations, setOperations] = useState<IOperation[]>([])
+  const [operations, setOperations] = useState<IOperationDB[] | null>(null)
   const [loadingData, setLoadingData] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState(false)
 
-  async function fetchOperations(): Promise<IOperation[]> {
+  async function fetchOperations(): Promise<IOperationDB[]> {
     setLoadingData(true)
 
     try {
@@ -27,14 +28,14 @@ function Costs() {
     }
   }
 
-  async function createOperations(
-    operation: Omit<IOperation, 'id'>
-  ): Promise<void> {
+  async function createOperations(operation: IOperation): Promise<void> {
     setLoadingCreate(true)
     try {
-      const { data } = await apiClient.costs.addOperation(operation)
+      // const { data } = await apiClient.costs.addOperation(operation)
+      const { error } = await addOperation(operation)
+      if (error) throw Error(error.message)
+
       notification.success({ message: 'Операция успешно добавлена' })
-      setOperations([...operations, data])
     } catch (error) {
       notification.error({ message: 'Ошибка при создании новой операции' })
     } finally {
@@ -46,13 +47,13 @@ function Costs() {
     try {
       await apiClient.costs.deleteOperation(id)
       notification.success({ message: 'Операция успешно удалена' })
-      setOperations(operations.filter(x => x.id !== id))
+      setOperations(operations?.filter(x => x.id !== id) ?? null)
     } catch (error) {
       notification.error({ message: 'Ошибка при удалении операции' })
     }
   }
 
-  const OPERATION_COLS: ColumnsType<IOperation> = [
+  const OPERATION_COLS: ColumnsType<IOperationDB> = [
     {
       title: 'Дата',
       dataIndex: 'month',
@@ -100,7 +101,7 @@ function Costs() {
         loading={loadingCreate}
       />
       <OperationTable
-        dataSource={operations}
+        dataSource={operations?.length ? operations : []}
         loading={loadingData}
         columns={OPERATION_COLS}
       />

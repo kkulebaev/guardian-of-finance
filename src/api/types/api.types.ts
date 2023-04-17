@@ -23,6 +23,46 @@ export interface Database {
           label?: string
         }
       }
+      operations: {
+        Row: {
+          amount: number
+          categoryId: number
+          created_at: string | null
+          id: string
+          month: string
+          userId: number
+        }
+        Insert: {
+          amount: number
+          categoryId: number
+          created_at?: string | null
+          id?: string
+          month: string
+          userId: number
+        }
+        Update: {
+          amount?: number
+          categoryId?: number
+          created_at?: string | null
+          id?: string
+          month?: string
+          userId?: number
+        }
+      }
+      users: {
+        Row: {
+          id: number
+          name: string
+        }
+        Insert: {
+          id?: number
+          name: string
+        }
+        Update: {
+          id?: number
+          name?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
