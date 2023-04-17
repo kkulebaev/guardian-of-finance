@@ -1,5 +1,5 @@
 import type { Dayjs } from 'dayjs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   type CheckboxOptionType,
@@ -8,8 +8,14 @@ import {
   InputNumber,
   Select,
 } from 'antd'
-import { CATEGORIES, USERS } from '../helpers'
-import { Categories, ICategory, IOperation, IUser } from '../types'
+import { USERS } from '../helpers'
+import { getCategories } from '../api/services2/get-categories'
+import {
+  ICategories,
+  ICategory,
+  IOperation,
+  IUser,
+} from '../api/types/custom.types'
 
 interface FormFields {
   month: Dayjs
@@ -26,8 +32,16 @@ interface AddOperationFormProps {
 function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
   const [user, setUser] = useState<number | null>(null)
-  const [category, setCategory] = useState<Categories>(Categories.rent)
+  const [category, setCategory] = useState<ICategories | null>(null)
   const [sum, setSum] = useState(0)
+
+  const [categories, setCategories] = useState<ICategories | null>(null)
+
+  useEffect(() => {
+    getCategories().then(res => {
+      setCategories(res.data)
+    })
+  }, [])
 
   const sumHandler = (value: number | null) => {
     if (!value) return
@@ -55,7 +69,7 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
 
   return (
     <Form className="flex gap-4 w-full" onFinish={formSubmitHandler}>
-      <Form.Item className="w-full" label="Месяц" name="month" colon={false}>
+      <Form.Item className="w-full" label="Month" name="month" colon={false}>
         <DatePicker
           className="w-full"
           picker="month"
@@ -65,7 +79,7 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
           onChange={setMonth}
         />
       </Form.Item>
-      <Form.Item className="w-full" label="Имя" name="user" colon={false}>
+      <Form.Item className="w-full" label="Name" name="user" colon={false}>
         <Select
           className="w-full"
           value={user}
@@ -76,19 +90,19 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
       </Form.Item>
       <Form.Item
         className="w-full"
-        label="Категория"
+        label="Category"
         name="category"
         colon={false}
       >
         <Select
           className="w-full"
           value={category}
-          options={CATEGORIES.map(x => ({ value: x.id, label: x.label }))}
+          options={categories?.map(x => ({ value: x.id, label: x.label }))}
           labelInValue
           onChange={setCategory}
         />
       </Form.Item>
-      <Form.Item className="w-full" label="Сумма" name="sum" colon={false}>
+      <Form.Item className="w-full" label="Amount" name="sum" colon={false}>
         <InputNumber
           className="w-full"
           value={sum}

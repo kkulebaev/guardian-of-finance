@@ -4,9 +4,9 @@ import { ColumnsType } from 'antd/es/table'
 import * as dayjs from 'dayjs'
 
 import AddOperationForm from '../components/AddOperationForm'
-import { IOperation } from '../types'
 import OperationTable from '../components/OperationTable'
 import { apiClient } from '../api'
+import { IOperation } from '../api/types/custom.types'
 
 function Costs() {
   const [operations, setOperations] = useState<IOperation[]>([])
