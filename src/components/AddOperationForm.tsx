@@ -10,12 +10,7 @@ import {
 } from 'antd'
 import { USERS } from '../helpers'
 import { getCategories } from '../api/services2/get-categories'
-import {
-  ICategories,
-  ICategory,
-  IOperation,
-  IUser,
-} from '../api/types/custom.types'
+import { ICategories, IOperation } from '../api/types/custom.types'
 
 interface FormFields {
   month: Dayjs
@@ -25,7 +20,7 @@ interface FormFields {
 }
 
 interface AddOperationFormProps {
-  createOperation: (operation: Omit<IOperation, 'id'>) => void
+  createOperation: (operation: IOperation) => void
   loading?: boolean
 }
 
@@ -49,21 +44,11 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
   }
 
   const formSubmitHandler = (operation: FormFields) => {
-    const selectedUser = {
-      id: operation.user.value,
-      name: operation.user.label,
-    } as IUser
-
-    const selectedCat = {
-      id: operation.category.value,
-      label: operation.category.label,
-    } as ICategory
-
     createOperation({
-      user: selectedUser,
+      userId: operation.user.value as number,
       month: operation.month.toISOString(),
-      category: selectedCat,
-      sum: operation.sum,
+      categoryId: operation.category.value as number,
+      amount: operation.sum,
     })
   }
 

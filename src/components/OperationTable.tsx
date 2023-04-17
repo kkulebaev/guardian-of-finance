@@ -1,27 +1,21 @@
 import React from 'react'
 import { Table } from 'antd'
-import { v4 as uuidv4 } from 'uuid'
 import { ColumnsType } from 'antd/es/table'
+import { IOperationDB } from '../api/types/custom.types'
 
-interface OperationTableProps<T> {
-  dataSource: T[]
-  columns: ColumnsType<T>
+interface OperationTableProps {
+  dataSource: IOperationDB[]
+  columns: ColumnsType<IOperationDB>
   loading?: boolean
 }
 
-function OperationTable<T extends object>({
-  dataSource,
-  columns,
-  loading,
-}: OperationTableProps<T>) {
-  const getUniqRowKey = () => uuidv4()
-
+function OperationTable({ dataSource, columns, loading }: OperationTableProps) {
   return (
     <Table
       className="w-full"
       columns={columns}
       dataSource={dataSource}
-      rowKey={getUniqRowKey}
+      rowKey={dataSource.length.toString()}
       loading={loading}
     />
   )

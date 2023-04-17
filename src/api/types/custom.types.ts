@@ -11,9 +11,12 @@ export interface IUser {
 }
 
 export interface IOperation {
-  id: string
-  user: IUser
+  userId: number
   month: string
-  category: ICategory
-  sum: number
+  categoryId: number
+  amount: number
+}
+
+export interface IOperationDB extends IOperation {
+  id: string
 }
