@@ -1,5 +1,5 @@
 import { AxiosInstance, type AxiosResponse } from 'axios'
-import { IOperation } from '../../types'
+import { IOperation } from '../types/custom.types'
 
 const costsPrefix = '/costs'
 

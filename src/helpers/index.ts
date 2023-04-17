@@ -1,2 +1,2 @@
-export { CATEGORIES, USERS } from './main'
+export { USERS } from './main'
 export { NAV_ITEMS } from './nav'
