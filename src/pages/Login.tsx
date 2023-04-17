@@ -2,18 +2,24 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form, Input } from 'antd'
 import AppLogo from '../components/AppLogo'
+import { Credentials } from '../api/types/custom.types'
+import { signIn } from '../api/services/auth/sign-in'
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+  const onFinish = (creds: Credentials) => {
     setIsLoading(true)
-    setTimeout(() => {
-      navigate('/')
-      setIsLoading(false)
-    }, 2000)
+    signIn(creds)
+      .then(res => {
+        if (!res.error) {
+          navigate('/')
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -32,7 +38,7 @@ function Login() {
       <AppLogo className="mb-4" />
       <Form.Item
         label="Логин"
-        name="username"
+        name="email"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <Input />
