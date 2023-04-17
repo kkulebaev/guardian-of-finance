@@ -20,3 +20,8 @@ export interface IOperation {
 export interface IOperationDB extends IOperation {
   id: string
 }
+
+export interface Credentials {
+  email: string
+  password: string
+}
