@@ -5,10 +5,10 @@ import * as dayjs from 'dayjs'
 
 import AddOperationForm from '../components/AddOperationForm'
 import OperationTable from '../components/OperationTable'
-import { apiClient } from '../api'
 import { IOperation, IOperationDB } from '../api/types/custom.types'
-import { addOperation } from '../api/services2/add-operation'
-import { getOperations } from '../api/services2/get-operations'
+import { addOperation } from '../api/services/add-operation'
+import { getOperations } from '../api/services/get-operations'
+import { removeOperation } from '../api/services/remove-operation'
 
 function Costs() {
   const [operations, setOperations] = useState<IOperationDB[] | null>(null)
@@ -45,7 +45,7 @@ function Costs() {
 
   async function deleteOperation(id: string) {
     try {
-      await apiClient.costs.deleteOperation(id)
+      await removeOperation(id)
       notification.success({ message: 'Операция успешно удалена' })
       setOperations(operations?.filter(x => x.id !== id) ?? null)
     } catch (error) {

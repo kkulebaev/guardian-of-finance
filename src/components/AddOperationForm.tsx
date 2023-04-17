@@ -9,7 +9,7 @@ import {
   Select,
 } from 'antd'
 import { USERS } from '../helpers'
-import { getCategories } from '../api/services2/get-categories'
+import { getCategories } from '../api/services/get-categories'
 import { ICategories, IOperation } from '../api/types/custom.types'
 
 interface FormFields {
