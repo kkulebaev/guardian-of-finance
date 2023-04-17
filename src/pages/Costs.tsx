@@ -8,17 +8,18 @@ import OperationTable from '../components/OperationTable'
 import { apiClient } from '../api'
 import { IOperation, IOperationDB } from '../api/types/custom.types'
 import { addOperation } from '../api/services2/add-operation'
+import { getOperations } from '../api/services2/get-operations'
 
 function Costs() {
   const [operations, setOperations] = useState<IOperationDB[] | null>(null)
   const [loadingData, setLoadingData] = useState(false)
   const [loadingCreate, setLoadingCreate] = useState(false)
 
-  async function fetchOperations(): Promise<IOperationDB[]> {
+  async function fetchOperations(): Promise<IOperationDB[] | null> {
     setLoadingData(true)
 
     try {
-      const { data } = await apiClient.costs.getOperations()
+      const { data } = await getOperations()
       return data
     } catch (error) {
       notification.error({ message: 'Не удалось загрузить операции' })
@@ -31,7 +32,6 @@ function Costs() {
   async function createOperations(operation: IOperation): Promise<void> {
     setLoadingCreate(true)
     try {
-      // const { data } = await apiClient.costs.addOperation(operation)
       const { error } = await addOperation(operation)
       if (error) throw Error(error.message)
 
@@ -63,17 +63,17 @@ function Costs() {
     },
     {
       title: 'Имя',
-      dataIndex: ['user', 'name'],
+      dataIndex: 'userId',
       align: 'center',
     },
     {
       title: 'Категория',
-      dataIndex: ['category', 'label'],
+      dataIndex: 'categoryId',
       align: 'center',
     },
     {
       title: 'Сумма',
-      dataIndex: 'sum',
+      dataIndex: 'amount',
       align: 'center',
       render: value => (value ? value.toLocaleString() : null),
     },
