@@ -8,9 +8,9 @@ import {
   InputNumber,
   Select,
 } from 'antd'
-import { USERS } from '../helpers'
 import { getCategories } from '../api/services/get-categories'
-import { ICategories, IOperation } from '../api/types/custom.types'
+import { ICategories, IOperation, IUser } from '../api/types/custom.types'
+import { getUsers } from '../api/services/get-users'
 
 interface FormFields {
   month: Dayjs
@@ -31,10 +31,15 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
   const [sum, setSum] = useState(0)
 
   const [categories, setCategories] = useState<ICategories | null>(null)
+  const [users, setUsers] = useState<IUser[] | null>(null)
 
   useEffect(() => {
     getCategories().then(res => {
       setCategories(res.data)
+    })
+
+    getUsers().then(res => {
+      setUsers(res.data)
     })
   }, [])
 
@@ -68,7 +73,7 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
         <Select
           className="w-full"
           value={user}
-          options={USERS.map(x => ({ value: x.id, label: x.name }))}
+          options={users?.map(x => ({ value: x.id, label: x.name }))}
           labelInValue
           onChange={setUser}
         />
