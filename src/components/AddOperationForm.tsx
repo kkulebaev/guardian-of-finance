@@ -1,22 +1,15 @@
+import React, { useState } from 'react'
 import type { Dayjs } from 'dayjs'
-import React, { useEffect, useState } from 'react'
-import {
-  Button,
-  type CheckboxOptionType,
-  DatePicker,
-  Form,
-  InputNumber,
-  Select,
-} from 'antd'
-import { getCategories } from '../api/services/get-categories'
-import { ICategories, IOperation, IUser } from '../api/types/custom.types'
-import { getUsers } from '../api/services/get-users'
+import { Button, DatePicker, Form, InputNumber, Select } from 'antd'
+import { useGetCategories } from '../api/services/use-get-categories'
+import { ICategories, IOperation } from '../api/types/custom.types'
+import { useGetUsers } from '../api/services/use-get-users'
 
 interface FormFields {
   month: Dayjs
-  user: CheckboxOptionType
-  category: CheckboxOptionType
-  sum: number
+  userId: number
+  categoryId: number
+  amount: number
 }
 
 interface AddOperationFormProps {
@@ -28,32 +21,20 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
   const [user, setUser] = useState<number | null>(null)
   const [category, setCategory] = useState<ICategories | null>(null)
-  const [sum, setSum] = useState(0)
+  const [amount, setAmount] = useState(0)
 
-  const [categories, setCategories] = useState<ICategories | null>(null)
-  const [users, setUsers] = useState<IUser[] | null>(null)
+  const { isLoading: isLoadingCats, data: categories } = useGetCategories()
+  const { isLoading: isLoadingUsers, data: users } = useGetUsers()
 
-  useEffect(() => {
-    getCategories().then(res => {
-      setCategories(res.data)
-    })
-
-    getUsers().then(res => {
-      setUsers(res.data)
-    })
-  }, [])
-
-  const sumHandler = (value: number | null) => {
+  const amountHandler = (value: number | null) => {
     if (!value) return
-    setSum(value)
+    setAmount(value)
   }
 
   const formSubmitHandler = (operation: FormFields) => {
     createOperation({
-      userId: operation.user.value as number,
+      ...operation,
       month: operation.month.toISOString(),
-      categoryId: operation.category.value as number,
-      amount: operation.sum,
     })
   }
 
@@ -69,35 +50,35 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
           onChange={setMonth}
         />
       </Form.Item>
-      <Form.Item className="w-full" label="Name" name="user" colon={false}>
+      <Form.Item className="w-full" label="Name" name="user_id" colon={false}>
         <Select
           className="w-full"
           value={user}
           options={users?.map(x => ({ value: x.id, label: x.name }))}
-          labelInValue
+          loading={isLoadingUsers}
           onChange={setUser}
         />
       </Form.Item>
       <Form.Item
         className="w-full"
         label="Category"
-        name="category"
+        name="category_id"
         colon={false}
       >
         <Select
           className="w-full"
           value={category}
           options={categories?.map(x => ({ value: x.id, label: x.label }))}
-          labelInValue
+          loading={isLoadingCats}
           onChange={setCategory}
         />
       </Form.Item>
-      <Form.Item className="w-full" label="Amount" name="sum" colon={false}>
+      <Form.Item className="w-full" label="Amount" name="amount" colon={false}>
         <InputNumber
           className="w-full"
-          value={sum}
+          value={amount}
           step={1000}
-          onChange={sumHandler}
+          onChange={amountHandler}
         />
       </Form.Item>
       <Button className="ml-auto" htmlType="submit" loading={loading}>
