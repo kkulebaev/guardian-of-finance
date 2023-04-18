@@ -17,8 +17,13 @@ export interface IOperation {
   amount: number
 }
 
-export interface IOperationDB extends IOperation {
+export interface IOperationDB {
   id: string
+
+  users: IUser | IUser[] | null
+  month: string
+  categories: ICategory | ICategory[] | null
+  amount: number
 }
 
 export interface Credentials {

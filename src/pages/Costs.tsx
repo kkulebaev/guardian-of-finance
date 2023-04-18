@@ -1,57 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Button, notification } from 'antd'
+import React from 'react'
+import { Button } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import * as dayjs from 'dayjs'
 
 import AddOperationForm from '../components/AddOperationForm'
 import OperationTable from '../components/OperationTable'
-import { IOperation, IOperationDB } from '../api/types/custom.types'
-import { addOperation } from '../api/services/add-operation'
-import { getOperations } from '../api/services/get-operations'
-import { removeOperation } from '../api/services/remove-operation'
+import { IOperationDB } from '../api/types/custom.types'
+import { useGetOperations } from '../api/services/use-get-operations'
+import { useDeleteOperation } from '../api/services/use-delete-operation'
+import { useCreateOperations } from '../api/services/use-create-operations'
 
 function Costs() {
-  const [operations, setOperations] = useState<IOperationDB[] | null>(null)
-  const [loadingData, setLoadingData] = useState(false)
-  const [loadingCreate, setLoadingCreate] = useState(false)
-
-  async function fetchOperations(): Promise<IOperationDB[] | null> {
-    setLoadingData(true)
-
-    try {
-      const { data } = await getOperations()
-      return data
-    } catch (error) {
-      notification.error({ message: 'Не удалось загрузить операции' })
-      return []
-    } finally {
-      setLoadingData(false)
-    }
-  }
-
-  async function createOperations(operation: IOperation): Promise<void> {
-    setLoadingCreate(true)
-    try {
-      const { error } = await addOperation(operation)
-      if (error) throw Error(error.message)
-
-      notification.success({ message: 'Операция успешно добавлена' })
-    } catch (error) {
-      notification.error({ message: 'Ошибка при создании новой операции' })
-    } finally {
-      setLoadingCreate(false)
-    }
-  }
-
-  async function deleteOperation(id: string) {
-    try {
-      await removeOperation(id)
-      notification.success({ message: 'Операция успешно удалена' })
-      setOperations(operations?.filter(x => x.id !== id) ?? null)
-    } catch (error) {
-      notification.error({ message: 'Ошибка при удалении операции' })
-    }
-  }
+  const { isLoading, data: operations } = useGetOperations()
+  const { mutate: createOperation, isLoading: loadingCreate } =
+    useCreateOperations()
+  const { mutate: deleteOperation } = useDeleteOperation()
 
   const OPERATION_COLS: ColumnsType<IOperationDB> = [
     {
@@ -63,12 +26,12 @@ function Costs() {
     },
     {
       title: 'Имя',
-      dataIndex: 'userId',
+      dataIndex: ['users', 'name'],
       align: 'center',
     },
     {
       title: 'Категория',
-      dataIndex: 'categoryId',
+      dataIndex: ['categories', 'label'],
       align: 'center',
     },
     {
@@ -90,19 +53,15 @@ function Costs() {
     },
   ]
 
-  useEffect(() => {
-    fetchOperations().then(data => setOperations(data))
-  }, [])
-
   return (
     <div className="grid place-items-center">
       <AddOperationForm
-        createOperation={createOperations}
+        createOperation={createOperation}
         loading={loadingCreate}
       />
       <OperationTable
         dataSource={operations?.length ? operations : []}
-        loading={loadingData}
+        loading={isLoading}
         columns={OPERATION_COLS}
       />
     </div>
