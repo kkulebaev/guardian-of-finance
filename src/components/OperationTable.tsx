@@ -15,7 +15,7 @@ function OperationTable({ dataSource, columns, loading }: OperationTableProps) {
       className="w-full"
       columns={columns}
       dataSource={dataSource}
-      rowKey={dataSource.length.toString()}
+      rowKey="id"
       loading={loading}
     />
   )
