@@ -18,7 +18,7 @@ function Costs() {
 
   const OPERATION_COLS: ColumnsType<IOperationDB> = [
     {
-      title: 'Date',
+      title: 'Month',
       dataIndex: 'month',
       align: 'center',
       width: 200,
