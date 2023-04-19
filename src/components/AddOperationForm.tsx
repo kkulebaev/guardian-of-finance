@@ -82,7 +82,7 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
         />
       </Form.Item>
       <Button className="ml-auto" htmlType="submit" loading={loading}>
-        Добавить
+        Create
       </Button>
     </Form>
   )
