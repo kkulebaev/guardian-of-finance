@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
-export const enum NAV {
-  dashboard = 'Dashboard',
-  costs = 'Costs',
+const enum NAV {
+  dashboard = '/',
+  costs = '/costs',
 }
 
 // TODO: Типизировать роуты, чтобы label нельзя было ошибиться в NavLink to

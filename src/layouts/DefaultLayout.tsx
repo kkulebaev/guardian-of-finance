@@ -1,6 +1,6 @@
 import { Layout, Menu } from 'antd'
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 import { NAV_ITEMS } from '../helpers'
 import TopBar from '../components/TopBar'
@@ -9,6 +9,8 @@ const { Header, Content, Footer, Sider } = Layout
 
 function DefaultLayout() {
   const [collapsed, setCollapsed] = useState(false)
+
+  const location = useLocation()
 
   return (
     <Layout className="h-screen">
@@ -19,8 +21,8 @@ function DefaultLayout() {
       >
         <h1 className="text-white text-center p-2 text-3xl">LOGO</h1>
         <Menu
+          selectedKeys={[location.pathname]}
           theme="dark"
-          defaultSelectedKeys={['1']}
           mode="inline"
           items={NAV_ITEMS}
         />
