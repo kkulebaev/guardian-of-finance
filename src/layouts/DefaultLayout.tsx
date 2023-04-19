@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { NAV_ITEMS } from '../helpers'
-import AppLogo from '../components/AppLogo'
 import TopBar from '../components/TopBar'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -18,7 +17,7 @@ function DefaultLayout() {
         collapsed={collapsed}
         onCollapse={value => setCollapsed(value)}
       >
-        <AppLogo />
+        <h1 className="text-white text-center p-2 text-3xl">LOGO</h1>
         <Menu
           theme="dark"
           defaultSelectedKeys={['1']}
