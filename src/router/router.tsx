@@ -1,26 +1,28 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-} from 'react-router-dom'
+import React from 'react'
+import { createBrowserRouter } from 'react-router-dom'
 import DefaultLayout from '../layouts/DefaultLayout'
-import Dashboard from '../pages/Dashboard'
-import Costs from '../pages/Costs'
 import EmptyLayout from '../layouts/EmptyLayout'
 import Login from '../pages/Login'
 import Registration from '../pages/Registration'
+import { MAIN_MENU, NAV_ITEMS } from './nav'
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
-      <Route element={<DefaultLayout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/costs" element={<Costs />} />
-      </Route>
-      <Route element={<EmptyLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-      </Route>
-    </Route>
-  )
-)
+export const router = createBrowserRouter([
+  {
+    element: <DefaultLayout navItems={NAV_ITEMS} />,
+    children: MAIN_MENU,
+  },
+
+  {
+    element: <EmptyLayout />,
+    children: [
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/registration',
+        element: <Registration />,
+      },
+    ],
+  },
+])

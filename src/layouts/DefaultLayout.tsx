@@ -2,12 +2,16 @@ import { Layout, Menu } from 'antd'
 import React, { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import { NAV_ITEMS } from '../helpers'
 import TopBar from '../components/TopBar'
+import { MenuItem } from '../router/nav'
 
 const { Header, Content, Footer, Sider } = Layout
 
-function DefaultLayout() {
+interface DefaultLayoutProps {
+  navItems: MenuItem[]
+}
+
+function DefaultLayout({ navItems }: DefaultLayoutProps) {
   const [collapsed, setCollapsed] = useState(false)
 
   const location = useLocation()
@@ -24,7 +28,7 @@ function DefaultLayout() {
           selectedKeys={[location.pathname]}
           theme="dark"
           mode="inline"
-          items={NAV_ITEMS}
+          items={navItems}
         />
       </Sider>
       <Layout>
