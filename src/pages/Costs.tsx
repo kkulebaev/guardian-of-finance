@@ -18,24 +18,24 @@ function Costs() {
 
   const OPERATION_COLS: ColumnsType<IOperationDB> = [
     {
-      title: 'Дата',
+      title: 'Date',
       dataIndex: 'month',
       align: 'center',
       width: 200,
       render: value => (value ? dayjs(value).format('MMMM') : null),
     },
     {
-      title: 'Имя',
+      title: 'Name',
       dataIndex: ['users', 'name'],
       align: 'center',
     },
     {
-      title: 'Категория',
+      title: 'Category',
       dataIndex: ['categories', 'label'],
       align: 'center',
     },
     {
-      title: 'Сумма',
+      title: 'Amount',
       dataIndex: 'amount',
       align: 'center',
       render: value => (value ? value.toLocaleString() : null),
@@ -47,7 +47,7 @@ function Costs() {
       width: 100,
       render: (_, record) => (
         <Button danger onClick={() => deleteOperation(record.id)}>
-          Удалить
+          Delete
         </Button>
       ),
     },
