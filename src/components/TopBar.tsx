@@ -17,7 +17,9 @@ function TopBar() {
   })
 
   return (
-    <div className="flex justify-end gap-2 items-center h-full">
+    <div className="flex justify-between gap-2 items-center h-full">
+      <h1 className="text-white text-center p-2 text-3xl">LOGO</h1>
+
       <Button
         className="flex items-center text-indigo-100"
         type="link"
