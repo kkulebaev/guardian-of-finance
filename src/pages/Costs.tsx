@@ -11,7 +11,7 @@ import { useDeleteOperation } from '../api/services/use-delete-operation'
 import { useCreateOperations } from '../api/services/use-create-operations'
 
 function Costs() {
-  const { isLoading, data: operations } = useGetOperations()
+  const { isFetching, data: operations } = useGetOperations()
   const { mutate: createOperation, isLoading: loadingCreate } =
     useCreateOperations()
   const { mutate: deleteOperation } = useDeleteOperation()
@@ -61,7 +61,7 @@ function Costs() {
       />
       <OperationTable
         dataSource={operations?.length ? operations : []}
-        loading={isLoading}
+        loading={isFetching}
         columns={OPERATION_COLS}
       />
     </div>
