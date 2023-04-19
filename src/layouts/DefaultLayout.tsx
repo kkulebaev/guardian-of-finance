@@ -1,27 +1,15 @@
 import { Layout, Menu } from 'antd'
 import React, { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 import { NAV_ITEMS } from '../helpers'
 import AppLogo from '../components/AppLogo'
-import { signOut } from '../api/services/auth/sign-out'
-import { NAV } from '../helpers/nav'
+import TopBar from '../components/TopBar'
 
 const { Header, Content, Footer, Sider } = Layout
 
 function DefaultLayout() {
   const [collapsed, setCollapsed] = useState(false)
-
-  const navigate = useNavigate()
-
-  async function onLogoutHandler({ key }: { key: string }) {
-    if (key !== NAV.logout) return
-
-    const { error } = await signOut()
-    if (!error) {
-      navigate({ pathname: '/login' })
-    }
-  }
 
   return (
     <Layout className="h-screen">
@@ -36,11 +24,12 @@ function DefaultLayout() {
           defaultSelectedKeys={['1']}
           mode="inline"
           items={NAV_ITEMS}
-          onClick={onLogoutHandler}
         />
       </Sider>
       <Layout>
-        <Header />
+        <Header>
+          <TopBar />
+        </Header>
         <Content className="p-10">
           <Outlet />
         </Content>
