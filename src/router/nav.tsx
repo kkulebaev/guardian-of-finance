@@ -1,14 +1,26 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { MenuProps } from 'antd'
-import { BarChartOutlined, DollarCircleOutlined } from '@ant-design/icons'
+import {
+  BarChartOutlined,
+  DollarCircleOutlined,
+  IdcardOutlined,
+} from '@ant-design/icons'
+
+import Profile from '../pages/Profile'
 import Dashboard from '../pages/Dashboard'
 import Costs from '../pages/Costs'
 
 export const MAIN_MENU = [
   {
-    title: 'Dashboard',
+    title: 'Profile',
     path: '/',
+    element: <Profile />,
+    icon: <IdcardOutlined />,
+  },
+  {
+    title: 'Dashboard',
+    path: '/dashboard',
     element: <Dashboard />,
     icon: <BarChartOutlined />,
   },
