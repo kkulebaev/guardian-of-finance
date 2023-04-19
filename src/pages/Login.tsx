@@ -1,38 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Form, Input } from 'antd'
+import { useMutation } from 'react-query'
+import { Button, Form, Input, notification } from 'antd'
 import AppLogo from '../components/AppLogo'
-import { Credentials } from '../api/types/custom.types'
 import { signIn } from '../api/services/auth/sign-in'
 
 function Login() {
-  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const onFinish = (creds: Credentials) => {
-    setIsLoading(true)
-    signIn(creds)
-      .then(res => {
-        if (!res.error) {
-          navigate('/')
-        }
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
+  const { mutate: onSignInHandler, isLoading } = useMutation(signIn, {
+    onSuccess: ({ error }) => {
+      if (!error) {
+        navigate({ pathname: '/' })
+      } else {
+        notification.error({ message: error.message })
+      }
+    },
+  })
 
   return (
     <Form
       className="flex flex-col w-full max-w-xs"
       name="basic"
       layout="vertical"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      onFinish={onSignInHandler}
       autoComplete="off"
     >
       <AppLogo className="mb-4" />
@@ -43,7 +34,6 @@ function Login() {
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         label="Пароль"
         name="password"
@@ -51,7 +41,6 @@ function Login() {
       >
         <Input.Password />
       </Form.Item>
-
       <Button
         className="ml-auto"
         type="dashed"
