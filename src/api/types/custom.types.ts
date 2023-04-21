@@ -1,3 +1,5 @@
+import { CATEGORIES, FAMILY } from '../tables-name'
+
 export interface ICategory {
   id: number
   label: string
@@ -11,18 +13,18 @@ export interface IUser {
 }
 
 export interface IOperation {
-  userId: number
+  user_id: number
   month: string
-  categoryId: number
+  category_id: number
   amount: number
 }
 
 export interface IOperationDB {
   id: string
 
-  users: IUser | IUser[] | null
+  [FAMILY]: IUser | IUser[] | null
   month: string
-  categories: ICategory | ICategory[] | null
+  [CATEGORIES]: ICategory | ICategory[] | null
   amount: number
 }
 
