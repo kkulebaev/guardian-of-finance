@@ -31,6 +31,7 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
     setAmount(value)
   }
 
+  // TODO: Сделать валидацию на фронте
   const formSubmitHandler = (operation: FormFields) => {
     createOperation({
       ...operation,
