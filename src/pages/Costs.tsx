@@ -9,6 +9,7 @@ import { IOperationDB } from '../api/types/custom.types'
 import { useGetOperations } from '../api/services/use-get-operations'
 import { useDeleteOperation } from '../api/services/use-delete-operation'
 import { useCreateOperations } from '../api/services/use-create-operations'
+import { CATEGORIES, FAMILY } from '../api/tables-name'
 
 function Costs() {
   const { isFetching, data: operations } = useGetOperations()
@@ -26,12 +27,12 @@ function Costs() {
     },
     {
       title: 'Name',
-      dataIndex: ['users', 'name'],
+      dataIndex: [FAMILY, 'name'],
       align: 'center',
     },
     {
       title: 'Category',
-      dataIndex: ['categories', 'label'],
+      dataIndex: [CATEGORIES, 'label'],
       align: 'center',
     },
     {

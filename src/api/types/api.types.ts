@@ -23,33 +23,7 @@ export interface Database {
           label?: string
         }
       }
-      operations: {
-        Row: {
-          amount: number
-          categoryId: number
-          created_at: string | null
-          id: string
-          month: string
-          userId: number
-        }
-        Insert: {
-          amount: number
-          categoryId: number
-          created_at?: string | null
-          id?: string
-          month: string
-          userId: number
-        }
-        Update: {
-          amount?: number
-          categoryId?: number
-          created_at?: string | null
-          id?: string
-          month?: string
-          userId?: number
-        }
-      }
-      users: {
+      family: {
         Row: {
           id: number
           name: string
@@ -61,6 +35,55 @@ export interface Database {
         Update: {
           id?: number
           name?: string
+        }
+      }
+      operations: {
+        Row: {
+          amount: number
+          category_id: number
+          created_at: string | null
+          id: string
+          month: string
+          user_id: number
+        }
+        Insert: {
+          amount: number
+          category_id: number
+          created_at?: string | null
+          id?: string
+          month: string
+          user_id: number
+        }
+        Update: {
+          amount?: number
+          category_id?: number
+          created_at?: string | null
+          id?: string
+          month?: string
+          user_id?: number
+        }
+      }
+      users: {
+        Row: {
+          avatar_url: string | null
+          country: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          country?: string | null
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          country?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
         }
       }
     }

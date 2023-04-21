@@ -4,7 +4,7 @@ import { OPERATIONS } from '../tables-name'
 
 const QUERY_STRING = `
   id,
-  users (id, name),
+  family (id, name),
   month,
   categories (id, label),
   amount

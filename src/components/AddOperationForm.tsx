@@ -7,8 +7,8 @@ import { useGetUsers } from '../api/services/use-get-users'
 
 interface FormFields {
   month: Dayjs
-  userId: number
-  categoryId: number
+  user_id: number
+  category_id: number
   amount: number
 }
 
