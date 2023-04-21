@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createRoot } from 'react-dom/client'
 
-import './index.css'
+import './assets/style/index.css'
 import App from './App'
 
 const container = document.getElementById('root')

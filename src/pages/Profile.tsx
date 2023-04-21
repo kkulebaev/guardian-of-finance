@@ -1,7 +1,8 @@
 import React from 'react'
+import ProfileAvatar from '../components/ProfileAvatar'
 
 function Profile() {
-  return <h1>Profile</h1>
+  return <ProfileAvatar />
 }
 
 export default Profile
