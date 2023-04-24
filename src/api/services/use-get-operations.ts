@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import { supabaseInstance } from '../supabase-instance'
-import { OPERATIONS } from '../tables-name'
+import { DEFAULT_STALE_TIME, OPERATIONS } from '../constants'
 
 const QUERY_STRING = `
   id,
@@ -11,10 +11,16 @@ const QUERY_STRING = `
  `
 
 export function useGetOperations() {
-  return useQuery(OPERATIONS, async () => {
-    const { data } = await supabaseInstance
-      .from(OPERATIONS)
-      .select(QUERY_STRING)
-    return data
-  })
+  return useQuery(
+    OPERATIONS,
+    async () => {
+      const { data } = await supabaseInstance
+        .from(OPERATIONS)
+        .select(QUERY_STRING)
+      return data
+    },
+    {
+      staleTime: DEFAULT_STALE_TIME,
+    }
+  )
 }

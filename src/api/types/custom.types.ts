@@ -1,4 +1,4 @@
-import { CATEGORIES, FAMILY } from '../tables-name'
+import { CATEGORIES, FAMILY } from '../constants'
 
 export interface ICategory {
   id: number

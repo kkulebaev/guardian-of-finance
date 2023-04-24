@@ -9,7 +9,7 @@ import { IOperationDB } from '../api/types/custom.types'
 import { useGetOperations } from '../api/services/use-get-operations'
 import { useDeleteOperation } from '../api/services/use-delete-operation'
 import { useCreateOperations } from '../api/services/use-create-operations'
-import { CATEGORIES, FAMILY } from '../api/tables-name'
+import { CATEGORIES, FAMILY } from '../api/constants'
 
 function Costs() {
   const { isFetching, data: operations } = useGetOperations()
