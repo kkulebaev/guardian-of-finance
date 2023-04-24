@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import { supabaseInstance } from '../supabase-instance'
 import { OPERATIONS } from '../constants'
 import { queryClient } from '../query-instance'
+import { IOperationDB } from '../types/custom.types'
 
 export function useDeleteOperation() {
   return useMutation(
@@ -11,10 +12,20 @@ export function useDeleteOperation() {
         .from(OPERATIONS)
         .delete()
         .eq('id', id)
+        .select()
+        .single()
       return data
     },
     {
-      onSuccess: () => queryClient.invalidateQueries(OPERATIONS),
+      onSuccess: deletedOperation => {
+        queryClient.setQueriesData<IOperationDB[]>(
+          OPERATIONS,
+          oldOperations => {
+            if (!deletedOperation || !oldOperations) return oldOperations ?? []
+            return oldOperations.filter(x => x.id !== deletedOperation.id)
+          }
+        )
+      },
     }
   )
 }
