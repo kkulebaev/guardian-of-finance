@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query'
 
 import { supabaseInstance } from '../supabase-instance'
-import { OPERATIONS } from '../tables-name'
+import { OPERATIONS } from '../constants'
 import { queryClient } from '../query-instance'
 
 export function useDeleteOperation() {

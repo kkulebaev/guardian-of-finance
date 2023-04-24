@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 import { supabaseInstance } from '../supabase-instance'
-import { OPERATIONS } from '../tables-name'
+import { OPERATIONS } from '../constants'
 import { IOperation } from '../types/custom.types'
 import { queryClient } from '../query-instance'
 

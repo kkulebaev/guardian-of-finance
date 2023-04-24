@@ -1,6 +1,6 @@
 import { RcFile } from 'antd/es/upload/interface'
 import { supabaseInstance } from '../../supabase-instance'
-import { AVATARS } from '../../tables-name'
+import { AVATARS } from '../../constants'
 import { JPG_EXT } from './get-avatar'
 
 export async function postAvatar(fileName: string, file: RcFile) {

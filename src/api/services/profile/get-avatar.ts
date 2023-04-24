@@ -1,5 +1,5 @@
 import { supabaseInstance } from '../../supabase-instance'
-import { AVATARS } from '../../tables-name'
+import { AVATARS } from '../../constants'
 
 export const JPG_EXT = '.jpg'
 
