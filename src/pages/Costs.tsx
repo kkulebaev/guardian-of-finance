@@ -23,7 +23,8 @@ function Costs() {
       dataIndex: 'month',
       align: 'center',
       width: 200,
-      render: value => (value ? dayjs(value).format('MMMM') : null),
+      render: value =>
+        typeof value === 'string' ? dayjs(value).format('MMMM') : null,
     },
     {
       title: 'Name',
