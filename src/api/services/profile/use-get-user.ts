@@ -6,10 +6,8 @@ export function useGetUser() {
   return useQuery(
     USER,
     async () => {
-      const {
-        data: { user },
-      } = await supabaseInstance.auth.getUser()
-      return user
+      const { data } = await supabaseInstance.auth.getUser()
+      return data.user
     },
     {
       staleTime: DEFAULT_STALE_TIME,
