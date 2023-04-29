@@ -7,32 +7,19 @@ import UploadButton from './UploadButton'
 import { postAvatar } from '../api/services/profile/post-avatar'
 import { checkUploadAvatar } from '../utils/check-upload-avatar'
 
-// TODO: Испавить имя файла на uuid пользователя
-const TEST_FILE_NAME = 'KULEBAEV_KONSTANTIN_GREEN_CARD'
+interface ProfileAvatarProps {
+  userId: string
+}
 
-function ProfileAvatar() {
+function ProfileAvatar({ userId }: ProfileAvatarProps) {
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>()
-
-  function downloadAvatar() {
-    setLoading(true)
-    getAvatar(TEST_FILE_NAME)
-      .then(url => {
-        setImageUrl(url)
-      })
-      .catch(e => {
-        if (e instanceof Error) notification.error({ message: e.message })
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
 
   async function uploadAvatar(file: UploadFile) {
     if (!file.originFileObj) return
 
     setLoading(true)
-    const { error } = await postAvatar(TEST_FILE_NAME, file.originFileObj)
+    const { error } = await postAvatar(userId, file.originFileObj)
     if (!error) {
       setImageUrl(URL.createObjectURL(file.originFileObj))
     }
@@ -53,8 +40,23 @@ function ProfileAvatar() {
   }
 
   useEffect(() => {
+    // TODO: Исправить скачивание аватарки каждый раз
+    function downloadAvatar() {
+      setLoading(true)
+      getAvatar(userId)
+        .then(url => {
+          setImageUrl(url)
+        })
+        .catch(e => {
+          if (e instanceof Error) notification.error({ message: e.message })
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
+
     downloadAvatar()
-  }, [])
+  }, [userId])
 
   return (
     <Upload
