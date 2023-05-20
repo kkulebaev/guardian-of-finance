@@ -1,4 +1,3 @@
-import React from 'react'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 
 interface UploadButtonProps {

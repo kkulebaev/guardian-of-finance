@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { Dayjs } from 'dayjs'
 import { Button, DatePicker, Form, InputNumber, Select } from 'antd'
 import { useGetCategories } from '../api/services/use-get-categories'

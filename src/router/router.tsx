@@ -1,4 +1,3 @@
-import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import DefaultLayout from '../layouts/DefaultLayout'
 import EmptyLayout from '../layouts/EmptyLayout'

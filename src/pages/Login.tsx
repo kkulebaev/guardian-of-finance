@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { Button, Form, Input, notification } from 'antd'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { IOperationDB } from '../api/types/custom.types'

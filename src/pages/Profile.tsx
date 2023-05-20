@@ -1,4 +1,3 @@
-import React from 'react'
 import { Result, Spin } from 'antd'
 import ProfileAvatar from '../components/ProfileAvatar'
 import { useGetUser } from '../api/services/profile/use-get-user'
