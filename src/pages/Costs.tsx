@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import * as dayjs from 'dayjs'

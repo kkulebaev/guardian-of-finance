@@ -1,5 +1,5 @@
 import { Layout, Menu, Typography } from 'antd'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
 import TopBar from '../components/TopBar'
