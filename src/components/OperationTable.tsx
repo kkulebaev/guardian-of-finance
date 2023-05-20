@@ -5,10 +5,14 @@ import { IOperationDB } from '../api/types/custom.types'
 interface OperationTableProps {
   dataSource: IOperationDB[]
   columns: ColumnsType<IOperationDB>
-  loading?: boolean
+  loading: boolean
 }
 
-function OperationTable({ dataSource, columns, loading }: OperationTableProps) {
+function OperationTable({
+  dataSource,
+  columns,
+  loading = false,
+}: OperationTableProps) {
   return (
     <Table
       className="w-full"
@@ -18,10 +22,6 @@ function OperationTable({ dataSource, columns, loading }: OperationTableProps) {
       loading={loading}
     />
   )
-}
-
-OperationTable.defaultProps = {
-  loading: false,
 }
 
 export default OperationTable

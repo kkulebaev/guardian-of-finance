@@ -14,10 +14,13 @@ interface FormFields {
 
 interface AddOperationFormProps {
   createOperation: (operation: IOperation) => void
-  loading?: boolean
+  loading: boolean
 }
 
-function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
+function AddOperationForm({
+  createOperation,
+  loading = false,
+}: AddOperationFormProps) {
   const [month, setMonth] = useState<Dayjs | null>(null)
   const [user, setUser] = useState<number | null>(null)
   const [category, setCategory] = useState<ICategories | null>(null)
@@ -87,10 +90,6 @@ function AddOperationForm({ createOperation, loading }: AddOperationFormProps) {
       </Button>
     </Form>
   )
-}
-
-AddOperationForm.defaultProps = {
-  loading: false,
 }
 
 export default AddOperationForm
