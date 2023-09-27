@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import { supabaseInstance } from '../supabase-instance'
 import { OPERATIONS } from '../constants'
 import { IOperation } from '../types/custom.types'
@@ -11,7 +11,7 @@ export function useCreateOperations() {
       return data
     },
     {
-      onSuccess: () => queryClient.invalidateQueries(OPERATIONS),
+      onSuccess: () => queryClient.invalidateQueries([OPERATIONS]),
     }
   )
 }

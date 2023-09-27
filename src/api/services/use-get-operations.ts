@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { supabaseInstance } from '../supabase-instance'
 import { DEFAULT_STALE_TIME, OPERATIONS } from '../constants'
 
@@ -12,7 +12,7 @@ const QUERY_STRING = `
 
 export function useGetOperations() {
   return useQuery(
-    OPERATIONS,
+    [OPERATIONS],
     async () => {
       const { data } = await supabaseInstance
         .from(OPERATIONS)

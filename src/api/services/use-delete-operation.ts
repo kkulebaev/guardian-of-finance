@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 
 import { supabaseInstance } from '../supabase-instance'
 import { OPERATIONS } from '../constants'
@@ -19,7 +19,7 @@ export function useDeleteOperation() {
     {
       onSuccess: deletedOperation => {
         queryClient.setQueriesData<IOperationDB[]>(
-          OPERATIONS,
+          [OPERATIONS],
           oldOperations => {
             if (!deletedOperation || !oldOperations) return oldOperations ?? []
             return oldOperations.filter(x => x.id !== deletedOperation.id)

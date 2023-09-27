@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Button, Form, Input, notification } from 'antd'
 import AppLogo from '../components/AppLogo'
 import { signIn } from '../api/services/auth/sign-in'

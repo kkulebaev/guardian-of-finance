@@ -1,10 +1,10 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { supabaseInstance } from '../supabase-instance'
 import { DEFAULT_STALE_TIME, FAMILY } from '../constants'
 
 export function useGetUsers() {
   return useQuery(
-    FAMILY,
+    [FAMILY],
     async () => {
       const { data } = await supabaseInstance.from(FAMILY).select()
       return data

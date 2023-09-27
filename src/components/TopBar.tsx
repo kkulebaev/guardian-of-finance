@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import { ExportOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import { signOut } from '../api/services/auth/sign-out'
 
 function TopBar() {
